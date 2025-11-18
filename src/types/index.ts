@@ -1,6 +1,6 @@
 export interface GameSession {
     id: string;
-    createdAt: Date;
+    startDate: Date;
     endDate: Date | null;
     completed: boolean;
     sessionId: string;
