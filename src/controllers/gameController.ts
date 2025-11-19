@@ -5,7 +5,7 @@ import { GameModel } from "../models/gameModel";
 import { capybaraBounds } from "../helpers/capybaraBounds";
 import { isWithinBounds } from "../helpers/coordinateUtils";
 
-export const GameControllers = {
+export const GameController = {
   async startGame(req: Request, res: Response) {
     try {
       const { sessionId } = req.body;
