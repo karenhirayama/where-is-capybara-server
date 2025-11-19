@@ -1,5 +1,6 @@
-import pool from "../config/database";
 import { Score } from "../types";
+
+import pool from "../config/database";
 
 export const ScoreModel = {
   async create(
@@ -28,6 +29,19 @@ export const ScoreModel = {
       return result.rows;
     } catch (error) {
       throw new Error(`Failed in get scores: ${error}`);
+    }
+  },
+
+  async findPlayerName(playerName: string): Promise<Score | null> {
+    try {
+      const result = await pool.query(
+        "SELECT * FROM scores WHERE player_name = $1",
+        [playerName]
+      );
+
+      return result.rows[0] || null;
+    } catch (error) {
+      throw new Error(`Failed in find player name: ${error}`);
     }
   },
 };
