@@ -1,5 +1,6 @@
 import express from "express";
 import session from "express-session";
+import cors from "cors";
 
 import gameRouter from "./routes/game";
 import scoreRouter from "./routes/scores";
@@ -7,6 +8,8 @@ import scoreRouter from "./routes/scores";
 import config from "./config/config";
 
 const app = express();
+
+app.use(cors());
 
 app.use(
   session({

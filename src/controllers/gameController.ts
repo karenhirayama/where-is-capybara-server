@@ -11,17 +11,15 @@ export const GameController = {
     try {
       const sessionId = req.sessionID;
 
-      console.log("sessionId", sessionId);
-
       if (!sessionId) {
         return res.status(400).json({ message: "Session id is required" });
       }
 
-      const gameSession = await GameModel.create(sessionId);
+      await GameModel.create(sessionId);
 
       res.status(201).json({
         success: true,
-        data: { session: gameSession },
+        data: { sessionId: sessionId },
         message: "Game session started",
       });
     } catch (error) {
@@ -35,26 +33,20 @@ export const GameController = {
 
   async validatePostion(req: Request, res: Response) {
     try {
-      const { clickY, clickX, screenWidth, screenHeight, sessionId } = req.body;
+      const { clickX, clickY, screenWidth, screenHeight, sessionId } = req.body;
 
-      if (
-        clickX === undefined ||
-        clickY === undefined ||
-        !screenWidth ||
-        !screenHeight ||
-        !sessionId
-      ) {
-        return res.status(400).json({
-          success: false,
-          error: "Missing required fields",
-        });
-      }
-
-            const { normalizedX, normalizedY } = normalizeCoordinates(
-        clickX, clickY, screenWidth, screenHeight
+      const { normalizedX, normalizedY } = normalizeCoordinates(
+        clickX,
+        clickY,
+        screenWidth,
+        screenHeight
       );
 
-      const isCorrect = isWithinBounds(normalizedX, normalizedY, capybaraBounds);
+      const isCorrect = isWithinBounds(
+        normalizedX,
+        normalizedY,
+        capybaraBounds
+      );
 
       if (!isCorrect) {
         return res.status(200).json({
@@ -73,6 +65,7 @@ export const GameController = {
         message: "Capybara found!",
       });
     } catch (error) {
+      console.error("Validation error:", error);
       res.status(500).json({
         success: false,
         error: "Failed to validate position",

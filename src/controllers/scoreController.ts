@@ -24,7 +24,7 @@ export const ScoreController = {
 
       const gameSession = await GameModel.findBySessionId(sessionId);
 
-      if (!gameSession || !gameSession.completed) {
+      if (!gameSession || !gameSession.is_completed) {
         return res.status(400).json({
           success: false,
           error: "Game session is not completed or does not exist",

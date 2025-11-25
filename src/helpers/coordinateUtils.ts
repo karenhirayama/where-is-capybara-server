@@ -1,12 +1,12 @@
 import { Bounds } from "../types";
 
 export const isWithinBounds = (
-  clickY: number,
-  clickX: number,
+  normalizedX: number,
+  normalizedY: number,
   bounds: Bounds,
-  tolerance: number = 1.2
+  tolerance: number = 0.03
 ): boolean => {
-  const { x1, y1, x2, y2 } = bounds;
+  const { x, y } = bounds;
 
-  return clickX >= (x1 - tolerance) && clickX <= (x2 + tolerance) && clickY >= (y1 - tolerance) && clickY <= (y2 + tolerance)
+  return normalizedX >= (x - tolerance) && normalizedX <= (x + tolerance) && normalizedY >= (y - tolerance) && normalizedY <= (y + tolerance)
 };
