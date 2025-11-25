@@ -20,3 +20,8 @@ export interface Bounds {
   x2: number;
   y2: number;
 }
+
+export interface NormalizedCoordinates {
+  normalizedX: number;
+  normalizedY: number;
+}

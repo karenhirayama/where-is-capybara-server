@@ -10,6 +10,7 @@ interface Config {
   dbDatabase: string | undefined;
   dbPassword: string | undefined;
   dbPort: number;
+  sessionSecret: string
 }
 
 const config: Config = {
@@ -20,6 +21,7 @@ const config: Config = {
   dbDatabase: process.env.DB_NAME,
   dbPassword: process.env.DB_PASSWORD,
   dbPort: Number(process.env.DB_PORT) || 5432,
+  sessionSecret: process.env.SESSION_SECRET || '',
 };
 
 export default config;

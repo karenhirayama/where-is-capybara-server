@@ -11,7 +11,7 @@ export const ScoreController = {
       if (!sessionId || !playerName) {
         return res
           .status(400)
-          .json({ success: false, error: "Missing required fields " });
+          .json({ success: false, error: "Missing required fields" });
       }
 
       const existingPlayer = await ScoreModel.findPlayerName(playerName);

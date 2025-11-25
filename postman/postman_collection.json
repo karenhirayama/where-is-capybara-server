@@ -1,0 +1,127 @@
+{
+  "info": {
+    "name": "Capybara Game API Collection",
+    "description": "Collection for Capybara Finding Game APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": ["{{base_url}}"],
+          "path": ["health"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Game Routes",
+      "item": [
+        {
+          "name": "Start Game",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/game/start",
+              "host": ["{{base_url}}"],
+              "path": ["api", "game", "start"]
+            },
+            "description": "Start a new game session"
+          },
+          "response": []
+        },
+        {
+          "name": "Validate Position",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": \"session-123\",\n  \"clickX\": 150,\n  \"clickY\": 200\n,\n  \"screenWidth\": 200\n,\n  \"screenHeight\": 200\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/game/validate-position",
+              "host": ["{{base_url}}"],
+              "path": ["api", "game", "validate-position"]
+            },
+            "description": "Validate if clicked position contains a capybara"
+          },
+          "response": []
+        },
+        {
+          "name": "Complete Game",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": \"session-123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/game/complete",
+              "host": ["{{base_url}}"],
+              "path": ["api", "game", "complete"]
+            },
+            "description": "Manually complete a game session"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Score Routes",
+      "item": [
+        {
+          "name": "Submit Score",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sessionId\": \"session-123\",\n  \"playerName\": \"capybara_lover\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/scores/submit",
+              "host": ["{{base_url}}"],
+              "path": ["api", "scores", "submit"]
+            },
+            "description": "Submit score after completing the game"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

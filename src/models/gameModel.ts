@@ -19,7 +19,7 @@ export const GameModel = {
   async complete(sessionId: string): Promise<GameSession> {
     try {
       const result = await pool.query(
-        "UPDATE game_sessions SET end_time = $1, complete = true WHERE session_id = $2 RETURNING *",
+        "UPDATE game_sessions SET end_time = $1, is_completed = true WHERE session_id = $2 RETURNING *",
         [new Date(), sessionId]
       );
 

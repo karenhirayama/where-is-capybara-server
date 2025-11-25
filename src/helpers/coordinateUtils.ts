@@ -4,7 +4,7 @@ export const isWithinBounds = (
   clickY: number,
   clickX: number,
   bounds: Bounds,
-  tolerance: number = 0.02
+  tolerance: number = 1.2
 ): boolean => {
   const { x1, y1, x2, y2 } = bounds;
 

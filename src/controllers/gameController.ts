@@ -4,11 +4,14 @@ import { GameModel } from "../models/gameModel";
 
 import { capybaraBounds } from "../helpers/capybaraBounds";
 import { isWithinBounds } from "../helpers/coordinateUtils";
+import { normalizeCoordinates } from "../helpers/normalizeCoordinates";
 
 export const GameController = {
   async startGame(req: Request, res: Response) {
     try {
-      const { sessionId } = req.body;
+      const sessionId = req.sessionID;
+
+      console.log("sessionId", sessionId);
 
       if (!sessionId) {
         return res.status(400).json({ message: "Session id is required" });
@@ -22,6 +25,7 @@ export const GameController = {
         message: "Game session started",
       });
     } catch (error) {
+      console.error("error", error);
       res.status(500).json({
         success: false,
         error: "Failed to start game session",
@@ -31,16 +35,26 @@ export const GameController = {
 
   async validatePostion(req: Request, res: Response) {
     try {
-      const { clickY, clickX, sessionId } = req.body;
+      const { clickY, clickX, screenWidth, screenHeight, sessionId } = req.body;
 
-      if (clickY === undefined || clickX === undefined) {
+      if (
+        clickX === undefined ||
+        clickY === undefined ||
+        !screenWidth ||
+        !screenHeight ||
+        !sessionId
+      ) {
         return res.status(400).json({
           success: false,
           error: "Missing required fields",
         });
       }
 
-      const isCorrect = isWithinBounds(clickY, clickX, capybaraBounds);
+            const { normalizedX, normalizedY } = normalizeCoordinates(
+        clickX, clickY, screenWidth, screenHeight
+      );
+
+      const isCorrect = isWithinBounds(normalizedX, normalizedY, capybaraBounds);
 
       if (!isCorrect) {
         return res.status(200).json({
@@ -50,9 +64,12 @@ export const GameController = {
         });
       }
 
+      await GameModel.complete(sessionId);
+      const timeTaken = await GameModel.calculateTimeTaken(sessionId);
+
       return res.status(200).json({
         success: true,
-        data: { found: true },
+        data: { found: true, timeTaken },
         message: "Capybara found!",
       });
     } catch (error) {
