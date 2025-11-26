@@ -31,6 +31,14 @@ export const ScoreController = {
         });
       }
 
+      const existingScore = await ScoreModel.findByGameSessionId(gameSession.id);
+
+      if (existingScore) {
+        return res
+          .status(400)
+          .json({ success: false, error: "Score already submitted for this game session" });
+      }
+
       const timeTaken = await GameModel.calculateTimeTaken(sessionId);
 
       if (!timeTaken) {
@@ -46,7 +54,7 @@ export const ScoreController = {
       res.status(201).json({
         success: true,
         data: { scores },
-        message: "Score submitted successfully,",
+        message: "Score submitted successfully",
       });
     } catch (error) {
       res.status(500).json({

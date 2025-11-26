@@ -12,10 +12,8 @@ services:
       - DB_NAME=${DB_NAME}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_PORT=${DB_PORT}
-      - CAPYBARA_X1=${CAPYBARA_X1}
-      - CAPYBARA_Y1=${CAPYBARA_Y1}
-      - CAPYBARA_X2=${CAPYBARA_X2}
-      - CAPYBARA_Y2=${CAPYBARA_Y2}
+      - CAPYBARA_X=${CAPYBARA_X}
+      - CAPYBARA_Y=${CAPYBARA_Y}
     depends_on:
       - db
     command: >

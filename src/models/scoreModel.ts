@@ -23,7 +23,7 @@ export const ScoreModel = {
   async getScores(): Promise<Score[]> {
     try {
       const result = await pool.query(
-        "SELECT player_name, time_taken, created_at FROM scores ORDER BY time taken ASC"
+        "SELECT * FROM scores ORDER BY time_taken ASC"
       );
 
       return result.rows;
@@ -42,6 +42,19 @@ export const ScoreModel = {
       return result.rows[0] || null;
     } catch (error) {
       throw new Error(`Failed in find player name: ${error}`);
+    }
+  },
+
+  async findByGameSessionId(sessionId: string): Promise<Score | null> {
+    try {
+      const result = await pool.query(
+        "SELECT * FROM scores WHERE game_session_id = $1",
+        [sessionId]
+      );
+
+      return result.rows[0] || null;
+    } catch (error) {
+      throw new Error(`Failed in find by session id: ${error}`);
     }
   },
 };
